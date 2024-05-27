@@ -18,3 +18,4 @@ class City{
 };
 
 const std::string getFileName();
+const std::string getSearch();
