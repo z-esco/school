@@ -13,6 +13,14 @@ City::City(std::string n, unsigned int p){
     population = p;
 }
 
+std::string City::getName() const{
+    return name;
+}
+
+unsigned int City::getPopulation() const{
+    return population;
+}
+
 //Misc function defs
     const std::string getFileName(){
         std::string file;

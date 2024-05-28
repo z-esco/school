@@ -8,41 +8,51 @@ int main(){
     //declare/init necessary variables
     std::string filename = getFileName();
     std::string search = getSearch();
-    char compare[50], line [70];
-    unsigned int count = 1;
-    bool match;
+    std::string name, compare;
+    char trash[90];
+    unsigned int count, lines = 0, population;
+    City city;
 
     //dec/init necessary streams
     std::fstream in(filename);
-    std::fstream in1(filename);
 
-    //do{
-        while(!in.eof() || count <= 10){
-            in1.getline(line, 70, '\n');
-            in.ignore(20, ' ');
-            in.getline(compare, 50, '\n');
+    //read loop to fill list
+    do{
+        in >> std::skipws>> population;
+        in >> std::noskipws >> name;
+        City c(name, population);
+        mainList.push_back(c);
+        lines++;
+    }while(in.ignore(1000, '\n'));
 
-            match = true;
-            for(int i = 0; i < search.length(); i++){
-                if(search[i] != compare[i])
-                    match = false;
-            }
+    // Display # of lines
+    std::cout << "Lines Read: " << lines << std::endl; 
 
-            if(match){
+    //repeat loop
+    do{
+        //reset count variable
+        count = 1;
+        std::list<City>::iterator itr = mainList.begin();
+        
+        for(int i = 0;i < mainList.size() && count <= 10; i++){
+            city = *itr;
+            compare = city.getName();        
+            compare = compare.substr(0, search.length());
+            std::cout << city.getName() << std::endl;
+            if(compare == search){
                 std::cout << "("<< count << ") ";
-                std::cout << line;
+                std::cout << city.getName() << "has a population of " << city.getPopulation() << std::endl;
                 count ++;
             }
-
+            itr++;
        }
 
         std::cout << "Another city? (use CTRL-D to exit)\n";
         std::cin >> search;
 
-    //}while(!std::cin.eof());
+    }while(!std::cin.eof());
 
     in.close();
-    in1.close();
 
 
 
